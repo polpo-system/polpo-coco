@@ -1,0 +1,51 @@
+COMPILER A
+
+(* A small Coco/R grammar, for the console of polpo. It exercises the IF(...) LL(1)
+   resolver of Coco/R 2012.01, a token declared by its characters, a token declared by
+   its string, literals that are not tokens, nested comments, and a repetition. *)
+
+IMPORT out;
+
+PROCEDURE D (x: INTEGER);
+VAR name, nextName: ARRAY 32 OF CHAR;
+BEGIN
+  AS.GetName(AS.pos, AS.len, name); AS.GetName(AS.nextPos, AS.nextLen, nextName);
+  out.String("D "); out.Int(x, 0);
+  out.String(" name="); out.String(name);
+  out.String(" next="); out.String(nextName);
+  out.Ln
+END D;
+
+PROCEDURE ZZZ (): BOOLEAN;
+BEGIN
+  RETURN FALSE
+END ZZZ;
+
+CHARACTERS
+  tab = CHR(9) .
+  lf = CHR(10) .
+  cr = CHR(13) .
+
+TOKENS
+  ident = "abcdefghijklmnopqrstuvwxyz" .
+  number = "0123456789" .
+  AAA = "AAA" .
+  B = "B" .
+  Z = "Z" .
+
+COMMENTS
+  FROM '(*' TO '*)' NESTED
+
+IGNORE tab + lf + cr
+
+PRODUCTIONS
+
+  A =
+      IF (ZZZ()) (. D(1) .)
+      AAA       (. D(2) .)
+    |            (. D(3) .)
+      AAA "B"   (. D(4) .)
+    { ident | number | Z }
+    .
+
+END A.
