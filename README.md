@@ -101,4 +101,5 @@ always be checked against a new run.
 
 `https://github.com/norayr/cocor_voc` (directory `new`) is a port of this version to
 Vishap Oberon Compiler, of the Coco/R of Native Oberon 2.3.6 and of H. Moessenboeck's
-original. The license is the one of Native Oberon: see `LICENSE`.
+original. The license is GPL-3 (`LICENSE`); the code comes from ETH Oberon, whose license (`LICENSE.ETH`)
+asks to keep its copyright notice and conditions, which `LICENSE.ETH` does.
