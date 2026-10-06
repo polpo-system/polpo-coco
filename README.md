@@ -2,8 +2,9 @@
 
 Coco/R is a compiler generator: it reads a grammar, an *attributed grammar* (`NAME.ATG`),
 and writes the scanner and the parser of the language described, and optionally a driver
-module. This is version 2012.01 by A. V. Shiryaev (the aixp port of H. Moessenboeck's
-Coco/R), adapted to polpo.
+module. Coco/R is the work of H. Moessenboeck (ETH Zurich, then Linz); this is the
+Coco/R of Native Oberon with the improvements of A. V. Shiryaev (aixp), version 2012.01,
+adapted to polpo.
 
 ## What is here
 
@@ -25,7 +26,11 @@ Coco/R), adapted to polpo.
 
 ## Using it
 
-In the shell of polpo, with the frames and the grammar in the current directory:
+Installed with portia (`portia.Install coco`), the frames `Parser.FRM` and `Scanner.FRM`
+are in `share/`, where they are found from any directory; `Driver.FRM`, `CR.ATG` and the
+examples are in `src/pkg/coco/`. A `Parser.FRM` or `Scanner.FRM` in the current directory
+is used instead of the installed one; copy `Driver.FRM` there to have a driver generated.
+In the shell of polpo:
 
     coco.Compile CR.ATG
     coco.Compile -x CR.ATG        a cross reference list of all syntax symbols
