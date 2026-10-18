@@ -9,27 +9,19 @@
    <name>P.Mod. A driver module is generated too, when a <name>Driver.FRM or a Driver.FRM
    is in the current directory.
 
-   The log of the console is not a text of its own: coco takes the log of the run and writes
-   it to the terminal. *)
+   Coco/R writes its messages into the log; coco shows them in the terminal (logs.Show). *)
 
 MODULE coco;
 
-IMPORT Texts := texts, Oberon0, out, CRD;
+IMPORT Texts := texts, Oberon0, out, logs, CRD;
 
 CONST usage = "coco.Compile [-x] [-s] grammar.atg";
-
-PROCEDURE ShowLog(log: Texts.Text);
-VAR R: Texts.Reader; ch: CHAR;
-BEGIN
-  Texts.OpenReader(R, log, 0); Texts.Read(R, ch);
-  WHILE ~R.eot DO out.Char(ch); Texts.Read(R, ch) END
-END ShowLog;
 
 PROCEDURE Compile*;
 VAR
   A: Texts.Reader; arg, file, opts: ARRAY 256 OF CHAR;
-  src, log, saved: Texts.Text;
-  i: INTEGER;
+  src: Texts.Text;
+  i: INTEGER; pos: LONGINT;
 BEGIN
   file := ""; opts := "";
   Texts.OpenArgs(A);
@@ -45,10 +37,8 @@ BEGIN
   IF src.len = 0 THEN
     out.String("coco: cannot read "); out.String(file); out.Ln; RETURN
   END;
-  (* the log of the console is empty: give the run a text of its own and show it *)
-  saved := Oberon0.Log; NEW(log); Texts.Open(log, ""); Oberon0.SetLog(log);
+  pos := Oberon0.Log.len;
   CRD.Run(src, 0, opts);
-  Oberon0.SetLog(saved);
-  ShowLog(log)
+  logs.Show(pos)
 END Compile;
 END coco.
