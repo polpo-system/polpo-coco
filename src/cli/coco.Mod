@@ -13,7 +13,7 @@
 
 MODULE coco;
 
-IMPORT Texts := texts, Oberon0, out, logs, CRD;
+IMPORT Texts, Oberon0, Out, logs, CRD;
 
 CONST usage = "coco.Compile [-x] [-s] grammar.atg";
 
@@ -32,10 +32,10 @@ BEGIN
     ELSIF file = "" THEN COPY(arg, file)
     END
   END;
-  IF file = "" THEN out.String(usage); out.Ln; RETURN END;
+  IF file = "" THEN Out.String(usage); Out.Ln; RETURN END;
   NEW(src); Texts.Open(src, file);
   IF src.len = 0 THEN
-    out.String("coco: cannot read "); out.String(file); out.Ln; RETURN
+    Out.String("coco: cannot read "); Out.String(file); Out.Ln; RETURN
   END;
   pos := Oberon0.Log.len;
   CRD.Run(src, 0, opts);
